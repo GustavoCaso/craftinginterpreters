@@ -78,7 +78,7 @@ public class Scanner {
       case '/':
         if (match('/')) {
           // A comment goes until the end of the line.
-          while (peek() != '\0' && !isAtEnd()) advance();
+          while (peek() != '\n' && !isAtEnd()) advance();
         } else {
           addToken(SLASH);
         }
@@ -179,7 +179,7 @@ public class Scanner {
   }
 
   private boolean isAtEnd() {
-    return current > source.length();
+    return current >= source.length();
   }
 
   private char advance() {
@@ -190,8 +190,8 @@ public class Scanner {
     addToken(type, null);
   }
 
-  private void addToken(TokenType type, Object litreal) {
+  private void addToken(TokenType type, Object literal) {
     String text = source.substring(start, current);
-    tokens.add(new Token(type, text, litreal, line));
+    tokens.add(new Token(type, text, literal, line));
   }
 }
